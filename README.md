@@ -7,15 +7,18 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 # Quickstart
 
 1. **Download git repository**
+
    `git clone https://github.com/BlockRazorinc/solana-trader-client-js.git`
 
 2. **Change directory**
+
    `cd solana-trader-client-js`
 
 3. **Download dependencies**
+
   `npm install @grpc/grpc-js @grpc/proto-loader`
 
-4. **Edit client.js**
+1. **Edit client.js**
 
 	```
 	// BlockRazor relay endpoint address
@@ -33,5 +36,6 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 	const tipAmount  = 1000000;
 	```
 
-5. **Run example**
-`node client.js`
+2. **Run example**
+   
+   `node client.js`
