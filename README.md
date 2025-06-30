@@ -16,7 +16,7 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 
 3. **Download dependencies**
 
-  `npm install @grpc/grpc-js @grpc/proto-loader`
+   `npm install @grpc/grpc-js @grpc/proto-loader`
 
 1. **Edit client.js**
 
