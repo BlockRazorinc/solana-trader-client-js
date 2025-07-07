@@ -16,9 +16,9 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 
 3. **Download dependencies**
 
-   `npm install @grpc/grpc-js @grpc/proto-loader`
+   `npm install @grpc/grpc-js @grpc/proto-loader @solana/web3.js`
 
-1. **Edit client.js**
+4. **Edit client.js**
 
 	```
 	// BlockRazor relay endpoint address
@@ -36,6 +36,10 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 	const tipAmount  = 1000000;
 	```
 
-2. **Run example**
+5. **Run mode_fast example**
    
-   `node client.js`
+   `node mode_fast.js`
+
+6. **Run mode_sandwichMitigation example**
+   
+   `node mode_sandwichMitigation.js`

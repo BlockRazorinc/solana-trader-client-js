@@ -27,10 +27,12 @@ const authKey = "";
 // relace your private key(base58)
 const privateKey = "";
 // send mode
-const mode = "fast";
+const mode = "sandwichMitigation";
+// safeWindow
+const safeWindow = 5;
 
 // tip amount
-const tipAmount  = 1000000;
+const tipAmount = 1000000;
 
 const tipAccounts = [
     "Gywj98ophM7GmkDdaWs4isqZnDdFCW7B46TXmKfvyqSm",
@@ -40,8 +42,8 @@ const tipAccounts = [
 ];
 
 function getRandomAccount() {
-  const randomIndex = Math.floor(Math.random() * tipAccounts.length);
-  return tipAccounts[randomIndex];
+    const randomIndex = Math.floor(Math.random() * tipAccounts.length);
+    return tipAccounts[randomIndex];
 }
 
 (async () => {
@@ -52,21 +54,21 @@ function getRandomAccount() {
 
     var meta = new grpc.Metadata();
     meta.add('apikey', authKey);
-    
+
     client.getHealth({}, meta, (err, response) => {
         if (err) {
             console.error('[get health] error:', err);
             return;
         }
-        
+
         console.log('[get health] response:', response);
     });
 
-    const senderPrivateKey = new Uint8Array(bs58.decode(privateKey)); 
+    const senderPrivateKey = new Uint8Array(bs58.decode(privateKey));
     const senderKeypair = web3.Keypair.fromSecretKey(senderPrivateKey);
 
     const tipAccount = getRandomAccount();
-    const recipientPublicKey = new web3.PublicKey(tipAccount); 
+    const recipientPublicKey = new web3.PublicKey(tipAccount);
 
     const transaction = new web3.Transaction().add(
         web3.SystemProgram.transfer({
@@ -85,12 +87,12 @@ function getRandomAccount() {
     const serializedTransaction = transaction.serialize();
     const base64Tx = serializedTransaction.toString('base64');
 
-	client.SendTransaction({transaction: base64Tx, mode:mode}, meta, (err, response) => {
+    client.SendTransaction({ transaction: base64Tx, mode: mode, safeWindow: safeWindow }, meta, (err, response) => {
         if (err) {
             console.error('[send tx] error:', err);
             return;
         }
-        
+
         console.log('[send tx] response:', response);
     });
 })();
