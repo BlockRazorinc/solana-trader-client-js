@@ -18,7 +18,7 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 
    `npm install @grpc/grpc-js @grpc/proto-loader @solana/web3.js`
 
-4. **Edit client.js**
+4. **Edit mode_fast.js or mode_sandwichMitigation.js**
 
 	```
 	// BlockRazor relay endpoint address
@@ -30,7 +30,7 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 	// relace your private key(base58)
 	const privateKey = "";
 	// send mode
-	const mode = "fast";
+	const mode = "";
 
 	// tip amount
 	const tipAmount  = 1000000;
