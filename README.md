@@ -16,9 +16,9 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 
 3. **Download dependencies**
 
-   `npm install @grpc/grpc-js @grpc/proto-loader @solana/web3.js`
+   `npm install`
 
-4. **Edit mode_fast.js or mode_sandwichMitigation.js**
+4. **Edit mode_grpc_fast.js**
 
 	```
 	// BlockRazor relay endpoint address
@@ -36,10 +36,118 @@ see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/
 	const tipAmount  = 1000000;
 	```
 
-5. **Run mode_fast example**
+5. **Run mode_grpc_fast example**
    
-   `node mode_fast.js`
+   `node mode_grpc_fast.js`
 
-6. **Run mode_sandwichMitigation example**
+# GRPC
+
+## fast mode
+
+1. **Edit mode_grpc_fast.js**
+    ```
+	// BlockRazor relay endpoint address
+	const blzRelayEndpoint = "frankfurt.solana-grpc.blockrazor.xyz:80";
+	// replace your solana rpc endpoint
+	const mainNetRPC = "";
+	// replace your authKey
+	const authKey = "";
+	// relace your private key(base58)
+	const privateKey = "";
+	// send mode
+	const mode = "";
+
+	// tip amount
+	const tipAmount  = 1000000;
+	```
+ 
+2. **Run mode_grpc_fast example**
    
-   `node mode_sandwichMitigation.js`
+   `node mode_grpc_fast.js`
+
+## sandwichMitigation mode
+
+1. **Edit mode_grpc_sandwichMitigation.js**
+    ```
+	// BlockRazor relay endpoint address
+	const blzRelayEndpoint = "frankfurt.solana-grpc.blockrazor.xyz:80";
+	// replace your solana rpc endpoint
+	const mainNetRPC = "";
+	// replace your authKey
+	const authKey = "";
+	// relace your private key(base58)
+	const privateKey = "";
+	// send mode
+	const mode = "sandwichMitigation";
+	// safeWindow
+	const safeWindow = 5;
+	// Revert protection
+	const revertProtection = false;
+	// tip amount
+	const tipAmount = 1000000;
+	```
+ 
+2. **Run mode_grpc_sandwichMitigation example**
+   
+   `node mode_grpc_sandwichMitigation.js`
+
+
+# HTTP
+
+## fast mode
+
+1. **Edit mode_http_fast.js**
+    ```
+	// BlockRazor relay endpoint address
+	const httpEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/sendTransaction";
+	const healthEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/health";
+	// Replace with your Solana RPC endpoint
+	const mainNetRPC = "";
+	// Replace with your authKey
+	const authKey = "";
+	// Replace with your private key (base58)
+	const privateKey = "";
+	// Replace with your target public key
+	const publicKey = "";
+	// Send mode
+	const mode = "fast";
+	// Transaction amount
+	const amount = 200_000;
+	// Tip amount
+	const tipAmount = 1000000;
+	```
+ 
+2. **Run mode_http_fast example**
+   
+   `node mode_http_fast.js`
+
+## sandwichMitigation mode
+
+1. **Edit mode_http_sandwichMitigation.js**
+    ```
+	// BlockRazor relay endpoint address
+	const httpEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/sendTransaction";
+	const healthEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/health";
+	// Replace with your Solana RPC endpoint
+	const mainNetRPC = "";
+	// Replace with your authKey
+	const authKey = "";
+	// Replace with your private key (base58)
+	const privateKey = "";
+	// Replace with your target public key
+	const publicKey = "";
+	// Send mode
+	const mode = "sandwichMitigation";
+	// Safe window
+	const safeWindow = 5;
+	// Revert protection
+	const revertProtection = false;
+	// Transaction amount
+	const amount = 200_000;
+	// Tip amount
+	const tipAmount = 1000000;
+	```
+ 
+2. **Run mode_http_sandwichMitigation example**
+   
+   `node mode_http_sandwichMitigation.js`

@@ -30,7 +30,8 @@ const privateKey = "";
 const mode = "sandwichMitigation";
 // safeWindow
 const safeWindow = 5;
-
+// Revert protection
+const revertProtection = false;
 // tip amount
 const tipAmount = 1000000;
 
@@ -97,7 +98,7 @@ function getRandomAccount() {
     const serializedTransaction = transaction.serialize();
     const base64Tx = serializedTransaction.toString('base64');
 
-    client.SendTransaction({ transaction: base64Tx, mode: mode, safeWindow: safeWindow }, meta, (err, response) => {
+    client.SendTransaction({ transaction: base64Tx, mode: mode, safeWindow: safeWindow, revertProtection: revertProtection}, meta, (err, response) => {
         if (err) {
             console.error('[send tx] error:', err);
             return;
