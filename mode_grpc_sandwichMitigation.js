@@ -52,20 +52,20 @@ const tipAccounts = [
     "AP6qExwrbRgBAVaehg4b5xHENX815sMabtBzUzVB4v8S",
 ];
 
+const client = new serverProto.Server(
+    blzRelayEndpoint,
+    grpc.credentials.createInsecure()
+);
+
+var meta = new grpc.Metadata();
+
 function getRandomAccount() {
     const randomIndex = Math.floor(Math.random() * tipAccounts.length);
     return tipAccounts[randomIndex];
 }
 
-(async () => {
-    const client = new serverProto.Server(
-        blzRelayEndpoint,
-        grpc.credentials.createInsecure()
-    );
-
-    var meta = new grpc.Metadata();
-    meta.add('apikey', authKey);
-
+// ------------------ Periodic Health Ping to Keep Connection Alive ------------------
+async function pingHealth() {
     client.getHealth({}, meta, (err, response) => {
         if (err) {
             console.error('[get health] error:', err);
@@ -74,6 +74,16 @@ function getRandomAccount() {
 
         console.log('[get health] response:', response);
     });
+}
+
+(async () => {
+    meta.add('apikey', authKey);
+
+    // Initial health check (establish connection)
+    await pingHealth();
+
+    // Periodically send /health to keep connection alive
+    setInterval(pingHealth, 30 * 1000);
 
     const senderPrivateKey = new Uint8Array(bs58.decode(privateKey));
     const senderKeypair = web3.Keypair.fromSecretKey(senderPrivateKey);
