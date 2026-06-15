@@ -1,153 +1,44 @@
 # Solana-trader-client-js
-example for solana-trader-client in Javascript
+
+Example for solana-trader-client in JavaScript.
 
 # Document
-see [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/js)
+
+See [document](https://blockrazor.gitbook.io/blockrazor/solana/send-transaction/js).
+
+# Transaction Encoding
+
+| Encoding | gRPC Method | HTTP Endpoint | Request Field |
+|---|---|---|---|
+| Base64 | `SendTransaction` | `/sendTransaction` | `transaction` |
+| Binary | `SendBinaryTransaction` | `/sendBinaryTransaction` | `binaryTransaction` |
+
+For gRPC Binary requests, pass the serialized transaction `Buffer` directly.
+For HTTP Binary requests, convert the serialized transaction to Base64 because
+the request body is JSON.
 
 # Quickstart
 
-1. **Download git repository**
+```bash
+git clone https://github.com/BlockRazorinc/solana-trader-client-js.git
+cd solana-trader-client-js
+npm install
+```
 
-   `git clone https://github.com/BlockRazorinc/solana-trader-client-js.git`
+# gRPC
 
-2. **Change directory**
-
-   `cd solana-trader-client-js`
-
-3. **Download dependencies**
-
-   `npm install`
-
-4. **Edit mode_grpc_fast.js**
-
-	```
-	// BlockRazor relay endpoint address
-	const blzRelayEndpoint = "frankfurt.solana-grpc.blockrazor.xyz:80";
-	// replace your solana rpc endpoint
-	const mainNetRPC = "";
-	// replace your authKey
-	const authKey = "";
-	// relace your private key(base58)
-	const privateKey = "";
-	// send mode
-	const mode = "";
-
-	// tip amount
-	const tipAmount  = 1000000;
-	```
-
-5. **Run mode_grpc_fast example**
-   
-   `node mode_grpc_fast.js`
-
-# GRPC
-
-## fast mode
-
-1. **Edit mode_grpc_fast.js**
-    ```
-	// BlockRazor relay endpoint address
-	const blzRelayEndpoint = "frankfurt.solana-grpc.blockrazor.xyz:80";
-	// replace your solana rpc endpoint
-	const mainNetRPC = "";
-	// replace your authKey
-	const authKey = "";
-	// relace your private key(base58)
-	const privateKey = "";
-	// send mode
-	const mode = "";
-
-	// tip amount
-	const tipAmount  = 1000000;
-	```
- 
-2. **Run mode_grpc_fast example**
-   
-   `node mode_grpc_fast.js`
-
-## sandwichMitigation mode
-
-1. **Edit mode_grpc_sandwichMitigation.js**
-    ```
-	// BlockRazor relay endpoint address
-	const blzRelayEndpoint = "frankfurt.solana-grpc.blockrazor.xyz:80";
-	// replace your solana rpc endpoint
-	const mainNetRPC = "";
-	// replace your authKey
-	const authKey = "";
-	// relace your private key(base58)
-	const privateKey = "";
-	// send mode
-	const mode = "sandwichMitigation";
-	// safeWindow
-	const safeWindow = 5;
-	// Revert protection
-	const revertProtection = false;
-	// tip amount
-	const tipAmount = 1000000;
-	```
- 
-2. **Run mode_grpc_sandwichMitigation example**
-   
-   `node mode_grpc_sandwichMitigation.js`
-
+| Mode | Encoding | Example |
+|---|---|---|
+| fast | Base64 | `node mode_grpc_fast.js` |
+| fast | Binary | `node mode_grpc_fast_binary.js` |
+| sandwichMitigation | Base64 | `node mode_grpc_sandwichMitigation.js` |
+| sandwichMitigation | Binary | `node mode_grpc_sandwichMitigation_binary.js` |
 
 # HTTP
 
-## fast mode
-
-1. **Edit mode_http_fast.js**
-    ```
-	// BlockRazor relay endpoint address
-	const httpEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/sendTransaction";
-	const healthEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/health";
-	// Replace with your Solana RPC endpoint
-	const mainNetRPC = "";
-	// Replace with your authKey
-	const authKey = "";
-	// Replace with your private key (base58)
-	const privateKey = "";
-	// Replace with your target public key
-	const publicKey = "";
-	// Send mode
-	const mode = "fast";
-	// Transaction amount
-	const amount = 200_000;
-	// Tip amount
-	const tipAmount = 1000000;
-	```
- 
-2. **Run mode_http_fast example**
-   
-   `node mode_http_fast.js`
-
-## sandwichMitigation mode
-
-1. **Edit mode_http_sandwichMitigation.js**
-    ```
-	// BlockRazor relay endpoint address
-	const httpEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/sendTransaction";
-	const healthEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/health";
-	// Replace with your Solana RPC endpoint
-	const mainNetRPC = "";
-	// Replace with your authKey
-	const authKey = "";
-	// Replace with your private key (base58)
-	const privateKey = "";
-	// Replace with your target public key
-	const publicKey = "";
-	// Send mode
-	const mode = "sandwichMitigation";
-	// Safe window
-	const safeWindow = 5;
-	// Revert protection
-	const revertProtection = false;
-	// Transaction amount
-	const amount = 200_000;
-	// Tip amount
-	const tipAmount = 1000000;
-	```
- 
-2. **Run mode_http_sandwichMitigation example**
-   
-   `node mode_http_sandwichMitigation.js`
+| Mode | Encoding | Example |
+|---|---|---|
+| fast | Base64 | `node mode_http_fast.js` |
+| fast | Binary | `node mode_http_fast_binary.js` |
+| sandwichMitigation | Base64 | `node mode_http_sandwichMitigation.js` |
+| sandwichMitigation | Binary | `node mode_http_sandwichMitigation_binary.js` |
