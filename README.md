@@ -27,6 +27,8 @@ npm install
 
 # gRPC
 
+## Send Transaction
+
 | Mode | Encoding | Example |
 |---|---|---|
 | fast | Base64 | `node mode_grpc_fast.js` |
@@ -34,7 +36,15 @@ npm install
 | sandwichMitigation | Base64 | `node mode_grpc_sandwichMitigation.js` |
 | sandwichMitigation | Binary | `node mode_grpc_sandwichMitigation_binary.js` |
 
+## Send Bundle
+
+| Encoding | Example |
+|---|---|
+| Base64 | `node send_bundle_grpc.js` |
+
 # HTTP
+
+## Send Transaction
 
 | Mode | Encoding | Example |
 |---|---|---|
@@ -42,3 +52,9 @@ npm install
 | fast | Binary | `node mode_http_fast_binary.js` |
 | sandwichMitigation | Base64 | `node mode_http_sandwichMitigation.js` |
 | sandwichMitigation | Binary | `node mode_http_sandwichMitigation_binary.js` |
+
+## Send Bundle
+
+| Encoding | Example |
+|---|---|
+| Base64 | `node send_bundle_http.js` |
