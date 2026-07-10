@@ -5,7 +5,7 @@ const bs58 = require('bs58');
 // ------------------ Configuration Constants ------------------
 // BlockRazor relay endpoint address
 const httpEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/v2/sendBinaryBatch";
-const healthEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/health";
+const healthEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/v2/health";
 // Replace with your Solana RPC endpoint
 const mainNetRPC = "";
 // Replace with your authKey
@@ -43,16 +43,6 @@ const tipAccounts = [
 ];
 
 // ------------------ Axios HTTP Client (Connection Reuse Enabled) ------------------
-const httpClientHealth = axios.create({
-		timeout: 10000,
-		headers: {
-				'Content-Type': 'application/octet-stream',
-				'apikey': authKey,
-		},
-		httpAgent: new (require('http').Agent)({ keepAlive: true }),
-		httpsAgent: new (require('https').Agent)({ keepAlive: true }),
-});
-
 const httpClient = axios.create({
 		timeout: 10000,
 		headers: {
@@ -65,7 +55,10 @@ const httpClient = axios.create({
 // ------------------ Periodic Health Ping to Keep Connection Alive ------------------
 async function pingHealth() {
 		try {
-				const res = await httpClientHealth.get(healthEndpoint);
+				const url = new URL(healthEndpoint);
+				url.searchParams.set("auth", authKey);
+				const fullEndpoint = url.toString();
+				const res = await httpClient.get(fullEndpoint);
 				console.log(`Health result:`, res.data);
 		} catch (err) {
 				console.error('Health check failed:', err.message);
