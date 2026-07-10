@@ -42,6 +42,12 @@ npm install
 |---|---|
 | Base64 | `node send_bundle_grpc.js` |
 
+## Send Batch
+
+| Encoding | Example |
+|---|---|
+| Base64 | `node send_batch_grpc.js` |
+
 # HTTP
 
 ## Send Transaction
@@ -58,3 +64,15 @@ npm install
 | Encoding | Example |
 |---|---|
 | Base64 | `node send_bundle_http.js` |
+
+## Send Batch
+
+| Encoding | Example |
+|---|---|
+| Base64 | `node send_batch_http.js` |
+
+## Send Batch with Binary
+
+| Encoding | Example |
+|---|---|
+| binary | `node send_batch_http_binary.js` |
