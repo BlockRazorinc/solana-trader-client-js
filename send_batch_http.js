@@ -1,11 +1,13 @@
 const axios = require('axios');
 const web3 = require('@solana/web3.js');
 const bs58 = require('bs58');
+const { getHttpTipAccount } = require('./get_tip_accounts');
 
 // ------------------ Configuration Constants ------------------
-// BlockRazor relay endpoint address
+// Example endpoints only. Always use the current endpoints published on the BlockRazor website.
 const httpEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/sendBatch";
 const healthEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/health";
+const tipAccountsEndpoint = "http://frankfurt.solana.blockrazor.xyz:443/getTipAccounts";
 // Replace with your Solana RPC endpoint
 const mainNetRPC = "";
 // Replace with your authKey
@@ -17,25 +19,7 @@ const publicKey = "";
 // Transaction amount
 const amount = 200_000;
 // Tip amount
-const tipAmount = 1000000;
-
-const tipAccounts = [
-		"68Pwb4jS7eZATjDfhmTXgRJjCiZmw1L7Huy4HNpnxJ3o",
-		"4ABhJh5rZPjv63RBJBuyWzBK3g9gWMUQdTZP2kiW31V9",
-		"B2M4NG5eyZp5SBQrSdtemzk5TqVuaWGQnowGaCBt8GyM",
-		"5jA59cXMKQqZAVdtopv8q3yyw9SYfiE3vUCbt7p8MfVf",
-		"5YktoWygr1Bp9wiS1xtMtUki1PeYuuzuCF98tqwYxf61",
-		"295Avbam4qGShBYK7E9H5Ldew4B3WyJGmgmXfiWdeeyV",
-		"EDi4rSy2LZgKJX74mbLTFk4mxoTgT6F7HxxzG2HBAFyK",
-		"BnGKHAC386n4Qmv9xtpBVbRaUTKixjBe3oagkPFKtoy6",
-		"Dd7K2Fp7AtoN8xCghKDRmyqr5U169t48Tw5fEd3wT9mq",
-		"AP6qExwrbRgBAVaehg4b5xHENX815sMabtBzUzVB4v8S",
-		"8EpzWhsr7uyZkfVD7MTHoWqupM14xngzMeUcCkWbY1UG",
-		"56XRik27PddNnR7JkHKqd5pWdMHeqje7TCm1gsdmvnTP",
-		"2DJNtR1tT7vfub7sDJ6v9NGmrzGVFUer5FvjhEcWEpvv",
-		"3AveZTS3PJo5qKEqHJci5bjW8neufriirr9mJXfsv4iH",
-		"9DC798ezxU2f2i8ggQ4vsqrsNxdDWJWAFg4cT1xLDR1X",
-];
+const tipAmount = 100_000;
 
 // ------------------ Axios HTTP Client (Connection Reuse Enabled) ------------------
 const httpClient = axios.create({
@@ -51,7 +35,7 @@ const httpClient = axios.create({
 // ------------------ Periodic Health Ping to Keep Connection Alive ------------------
 async function pingHealth() {
 		try {
-				const res = await httpClient.get(healthEndpoint);
+        const res = await httpClient.post(healthEndpoint, {});
 				console.log(`Health result:`, res.data);
 		} catch (err) {
 				console.error('Health check failed:', err.message);
@@ -63,7 +47,7 @@ async function sendBatch() {
 		const senderPrivateKey = new Uint8Array(bs58.decode(privateKey));
 		const senderKeypair = web3.Keypair.fromSecretKey(senderPrivateKey);
 		const receiver = new web3.PublicKey(publicKey);
-		const tipAccount = new web3.PublicKey(tipAccounts[Math.floor(Math.random() * tipAccounts.length)]);
+    const tipAccount = new web3.PublicKey(await getHttpTipAccount(tipAccountsEndpoint));
 
 		const connection = new web3.Connection(mainNetRPC);
 		const { blockhash } = await connection.getLatestBlockhash('finalized');

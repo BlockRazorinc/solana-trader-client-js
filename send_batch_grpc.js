@@ -1,5 +1,6 @@
 const web3 = require("@solana/web3.js");
 const bs58 = require("bs58");
+const { getGrpcTipAccount } = require('./get_tip_accounts');
 
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
@@ -18,7 +19,7 @@ const packageDefinition = protoLoader.loadSync(
 
 const serverProto = grpc.loadPackageDefinition(packageDefinition).serverpb;
 
-// BlockRazor relay endpoint address
+// This example endpoint may change. Always use the current endpoint published on the BlockRazor website.
 const blzRelayEndpoint = "frankfurt.solana-grpc.blockrazor.xyz:80";
 // replace your solana rpc endpoint
 const mainNetRPC = "";
@@ -28,25 +29,7 @@ const authKey = "";
 const privateKey = "";
 
 // tip amount
-const tipAmount = 1000000;
-
-const tipAccounts = [
-		"68Pwb4jS7eZATjDfhmTXgRJjCiZmw1L7Huy4HNpnxJ3o",
-		"4ABhJh5rZPjv63RBJBuyWzBK3g9gWMUQdTZP2kiW31V9",
-		"B2M4NG5eyZp5SBQrSdtemzk5TqVuaWGQnowGaCBt8GyM",
-		"5jA59cXMKQqZAVdtopv8q3yyw9SYfiE3vUCbt7p8MfVf",
-		"5YktoWygr1Bp9wiS1xtMtUki1PeYuuzuCF98tqwYxf61",
-		"295Avbam4qGShBYK7E9H5Ldew4B3WyJGmgmXfiWdeeyV",
-		"EDi4rSy2LZgKJX74mbLTFk4mxoTgT6F7HxxzG2HBAFyK",
-		"BnGKHAC386n4Qmv9xtpBVbRaUTKixjBe3oagkPFKtoy6",
-		"Dd7K2Fp7AtoN8xCghKDRmyqr5U169t48Tw5fEd3wT9mq",
-		"AP6qExwrbRgBAVaehg4b5xHENX815sMabtBzUzVB4v8S",
-		"8EpzWhsr7uyZkfVD7MTHoWqupM14xngzMeUcCkWbY1UG",
-		"56XRik27PddNnR7JkHKqd5pWdMHeqje7TCm1gsdmvnTP",
-		"2DJNtR1tT7vfub7sDJ6v9NGmrzGVFUer5FvjhEcWEpvv",
-		"3AveZTS3PJo5qKEqHJci5bjW8neufriirr9mJXfsv4iH",
-		"9DC798ezxU2f2i8ggQ4vsqrsNxdDWJWAFg4cT1xLDR1X",
-];
+const tipAmount = 100_000;
 
 const client = new serverProto.Server(
 		blzRelayEndpoint,
@@ -54,11 +37,6 @@ const client = new serverProto.Server(
 );
 
 var meta = new grpc.Metadata();
-
-function getRandomAccount() {
-		const randomIndex = Math.floor(Math.random() * tipAccounts.length);
-		return tipAccounts[randomIndex];
-}
 
 // ------------------ Periodic Health Ping to Keep Connection Alive ------------------
 async function pingHealth() {
@@ -84,7 +62,7 @@ async function pingHealth() {
 		const senderPrivateKey = new Uint8Array(bs58.decode(privateKey));
 		const senderKeypair = web3.Keypair.fromSecretKey(senderPrivateKey);
 
-		const tipAccount = getRandomAccount();
+		const tipAccount = await getGrpcTipAccount(client);
 		const recipientPublicKey = new web3.PublicKey(tipAccount);
 
 		const transaction = new web3.Transaction().add(
