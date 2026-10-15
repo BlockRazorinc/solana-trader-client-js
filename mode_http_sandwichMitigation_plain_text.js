@@ -59,9 +59,16 @@ async function sendTx() {
     const response = await httpClient.post(
         url.toString(),
         transaction.serialize().toString('base64'),
-        { headers: { 'Content-Type': 'text/plain' } },
+        {
+            headers: { 'Content-Type': 'text/plain' },
+            responseType: 'text',
+        },
     );
-    console.log('[send tx] response:', response.data);
+    const signature = response.data.trim();
+    if (!signature) {
+        throw new Error('send transaction returned an empty signature');
+    }
+    console.log('[send tx] signature:', signature);
 }
 
 (async () => {

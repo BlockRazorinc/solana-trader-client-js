@@ -78,8 +78,13 @@ async function sendTx() {
             headers: {
                 'Content-Type': 'application/octet-stream',
             },
+            responseType: 'text',
         });
-        console.log('[send tx] response:', res.data);
+        const signature = res.data.trim();
+        if (!signature) {
+            throw new Error('send transaction returned an empty signature');
+        }
+        console.log('[send tx] signature:', signature);
     } catch (err) {
         console.error('SendTx failed:', err.response?.data || err.message);
     }
